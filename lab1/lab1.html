@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Cocomo</title>
+</head>
+<script>
+    function getA() {
+        const type = document.getElementById('type').value
+        switch (type) {
+            case 'org':
+                return 2.4
+            case 'semi':
+                return 3.0
+            case 'emb':
+                return 3.6
+        }
+    }
+
+    function getB() {
+        const type = document.getElementById('type').value
+        switch (type) {
+            case 'org':
+                return 1.05
+            case 'semi':
+                return 1.12
+            case 'emb':
+                return 1.2
+        }
+    }
+
+    function getC() {
+        const type = document.getElementById('type').value
+        switch (type) {
+            case 'org':
+                return 2.5
+            case 'semi':
+                return 2.5
+            case 'emb':
+                return 2.5
+        }
+    }
+
+    function getD() {
+        const type = document.getElementById('type').value
+        switch (type) {
+            case 'org':
+                return 0.38
+            case 'semi':
+                return 0.35
+            case 'emb':
+                return 0.32
+        }
+    }
+
+    function calculate() {
+        const size = document.getElementById('number-of-strings').value
+        const PM = getA() * Math.pow(size, getB())
+        const TM = getC() * Math.pow(PM, getD())
+        const SS = PM / TM
+        document.getElementById('pm').innerHTML = Math.round(PM * 100) / 100
+        document.getElementById('tm').innerHTML = Math.round(TM * 100) / 100
+        document.getElementById('ss').innerHTML = Math.round(SS * 100) / 100
+    }
+</script>
+<body>
+<p>
+    <label for="type">Project type:</label>
+    <select name="type" id="type">
+        <option value="org" selected>Organic</option>
+        <option value="semi">Semi-Detached</option>
+        <option value="emb">Embedded</option>
+    </select>
+</p>
+<p>
+    <label for="number-of-strings">Number of strings</label>
+    <input type="number" name="number-of-strings" id="number-of-strings">
+</p>
+<p>
+    <button onclick="calculate()">Calculate</button>
+</p>
+<p>Employability (People × Month): <span id="pm"></span></p>
+<p>Development time (Months): <span id="tm"></span></p>
+<p>Developers: <span id="ss"></span></p>
+</body>
+</html>
