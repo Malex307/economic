@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Cocomo</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<script>
+    function getA() {
+        const type = document.getElementById('type').value
+        switch (type) {
+            case 'org':
+                return 2.4
+            case 'semi':
+                return 3.0
+            case 'emb':
+                return 3.6
+        }
+    }
+
+    function getB() {
+        const type = document.getElementById('type').value
+        switch (type) {
+            case 'org':
+                return 1.05
+            case 'semi':
+                return 1.12
+            case 'emb':
+                return 1.2
+        }
+    }
+
+    function getC() {
+        const type = document.getElementById('type').value
+        switch (type) {
+            case 'org':
+                return 2.5
+            case 'semi':
+                return 2.5
+            case 'emb':
+                return 2.5
+        }
+    }
+
+    function getD() {
+        const type = document.getElementById('type').value
+        switch (type) {
+            case 'org':
+                return 0.38
+            case 'semi':
+                return 0.35
+            case 'emb':
+                return 0.32
+        }
+    }
+
+    function getCds() {
+        let cds = 1;
+        for (let i = 1; i < 16; i++) {
+            cds *= document.getElementById('cd' + i).value;
+        }
+        return cds;
+    }
+
+    function calculate() {
+        const size = document.getElementById('number-of-strings').value
+        const PM = getCds() * getA() * Math.pow(size, getB())
+        const TM = getC() * Math.pow(PM, getD())
+        const SS = PM / TM
+        document.getElementById('pm').innerHTML = Math.round(PM * 100) / 100
+        document.getElementById('tm').innerHTML = Math.round(TM * 100) / 100
+        document.getElementById('ss').innerHTML = Math.round(SS * 100) / 100
+    }
+</script>
+<style>
+    .variant{
+        display: flex;
+        margin-bottom: 10px;
+    }
+    .label{
+        min-width: 400px;
+    }
+</style>
+<body>
+<div class="w3-sidebar w3-bar-block" style="width:25%">
+    <a href="lab1.html" class="w3-bar-item w3-button"><b>COCOMO I</b></a>
+    <a href="lab2.html" class="w3-bar-item w3-button"><b>COCOMO II</b></a>
+    <a href="lab3.html" class="w3-bar-item w3-button"><b>Functional points</b></a>
+</div>
+
+<div style="margin-left:25%">
+    <h1>COCOMO I</h1>
+<p>
+    <label class="label" for="type">Project type:</label>
+    <select name="type" id="type">
+        <option value="org" selected>Organic</option>
+        <option value="semi">Semi-Detached</option>
+        <option value="emb">Embedded</option>
+    </select>
+</p>
+<p>
+    <label class="label" for="number-of-strings">Number of strings</label>
+    <input type="number" name="number-of-strings" id="number-of-strings">
+</p>
+<p>
+    <button onclick="calculate()">Calculate</button>
+</p>
+<p>Employability (People × Month): <span id="pm"></span></p>
+<p>Development time (Months): <span id="tm"></span></p>
+<p>Developers: <span id="ss"></span></p>
+<p>
+<div class="variant">
+    <label class="label" for="cd1">Необхідна надійність ПЗ</label>
+    <div>
+        <select id="cd1">
+            <option value="0.75">Дуже низький</option>
+            <option value="0.88">Низький</option>
+            <option value="1">Середній</option>
+            <option value="1.15">Високий</option>
+            <option value="1.4">Дуже високий</option>
+            <option value="1">Критичний</option>
+        </select>
+    </div>
+</div>
+<div class="variant">
+    <label class="label" for="cd2">Розмір БД додатка</label>
+    <div>
+        <select id="cd2">
+            <option value="1">Дуже низький</option>
+            <option value="1">Низький</option>
+            <option value="1">Середній</option>
+            <option value="1.11">Високий</option>
+            <option value="1.3">Дуже високий</option>
+            <option value="1.6">Критичний</option>
+        </select>
+    </div>
+</div>
+<div class="variant">
+    <label class="label" for="cd3">Складність продукту</label>
+    <div>
+        <select id="cd3">
+            <option value="0.7">Дуже низький</option>
+            <option value="0.85">Низький</option>
+            <option value="1">Середній</option>
+            <option value="1.15">Високий</option>
+            <option value="1.3">Дуже високий</option>
+            <option value="1.65">Критичний</option>
+        </select>
+    </div>
+</div>
+<div class="variant">
+    <label class="label" for="cd4">Обмеження швидкодії при виконанні програми</label>
+    <div>
+        <select id="cd4">
+            <option value="1">Дуже низький</option>
+            <option value="1">Низький</option>
+            <option value="1">Середній</option>
+            <option value="1.11">Високий</option>
+            <option value="1.3">Дуже високий</option>
+            <option value="1.66">Критичний</option>
+        </select>
+    </div>
+</div>
+<div class="variant">
+    <label class="label" for="cd5">Обмеження пам'яті </label>
+    <div>
+        <select id="cd5">
+            <option value="1">Дуже низький</option>
+            <option value="1">Низький</option>
+            <option value="1">Середній</option>
+            <option value="1.06">Високий</option>
+            <option value="1.21">Дуже високий</option>
+            <option value="1.56">Критичний</option>
+        </select>
+    </div>
+</div>
+<div class="variant">
+    <label class="label" for="cd6">Нестійкість оточення віртуальної машини</label>
+    <div>
+        <select id="cd6">
+            <option value="1">Дуже низький</option>
+            <option value="0.87">Низький</option>
+            <option value="1">Середній</option>
+            <option value="1.15">Високий</option>
+            <option value="1.3">Дуже високий</option>
+            <option value="1">Критичний</option>
+        </select>
+    </div>
+</div>
+<div class="variant">
+    <label class="label" for="cd7">Необхідний час відновлення </label>
+    <div>
+        <select id="cd7">
+            <option value="1">Дуже низький</option>
+            <option value="0.87">Низький</option>
+            <option value="1">Середній</option>
+            <option value="1.07">Високий</option>
+            <option value="1.15">Дуже високий</option>
+            <option value="1">Критичний</option>
+        </select>
+    </div>
+</div>
+<div class="variant">
+    <label class="label" for="cd8">Аналітичні здібності</label>
+    <div>
+        <select id="cd8">
+            <option value="1.46">Дуже низький</option>
+            <option value="1.19">Низький</option>
+            <option value="1">Середній</option>
+            <option value="0.86">Високий</option>
+            <option value="0.71">Дуже високий</option>
+            <option value="1">Критичний</option>
+        </select>
+    </div>
+</div>
+<div class="variant">
+    <label class="label" for="cd9">Досвід розробки</label>
+    <div>
+        <select id="cd9">
+            <option value="1.29">Дуже низький</option>
+            <option value="1.13">Низький</option>
+            <option value="1">Середній</option>
+            <option value="0.91">Високий</option>
+            <option value="0.82">Дуже високий</option>
+            <option value="1">Критичний</option>
+        </select>
+    </div>
+</div>
+<div class="variant">
+    <label class="label" for="cd10">Здібності до розробки ПЗ</label>
+    <div>
+        <select id="cd10">
+            <option value="1.42">Дуже низький</option>
+            <option value="1.17">Низький</option>
+            <option value="1">Середній</option>
+            <option value="0.86">Високий</option>
+            <option value="0.7">Дуже високий</option>
+            <option value="1">Критичний</option>
+        </select>
+    </div>
+</div>
+<div class="variant">
+    <label class="label" for="cd11">Досвід використання віртуальних машин</label>
+    <div>
+        <select id="cd11">
+            <option value="1.21">Дуже низький</option>
+            <option value="1.1">Низький</option>
+            <option value="1">Середній</option>
+            <option value="0.9">Високий</option>
+            <option value="1">Дуже високий</option>
+            <option value="1">Критичний</option>
+        </select>
+    </div>
+</div>
+<div class="variant">
+    <label class="label" for="cd12">Досвід розробки на мовах програмування</label>
+    <div>
+        <select id="cd12">
+            <option value="1.14">Дуже низький</option>
+            <option value="1.07">Низький</option>
+            <option value="1">Середній</option>
+            <option value="0.95">Високий</option>
+            <option value="1">Дуже високий</option>
+            <option value="1">Критичний</option>
+        </select>
+    </div>
+</div>
+<div class="variant">
+    <label class="label" for="cd13">Застосування методів розробки ПЗ </label>
+    <div>
+        <select id="cd13">
+            <option value="1.24">Дуже низький</option>
+            <option value="1.1">Низький</option>
+            <option value="1">Середній</option>
+            <option value="0.91">Високий</option>
+            <option value="0.82">Дуже високий</option>
+            <option value="1">Критичний</option>
+        </select>
+    </div>
+</div>
+<div class="variant">
+    <label class="label" for="cd14">Використання інструментарію розробки</label>
+    <div>
+        <select id="cd14">
+            <option value="1.24">Дуже низький</option>
+            <option value="1.1">Низький</option>
+            <option value="1">Середній</option>
+            <option value="0.91">Високий</option>
+            <option value="0.83">Дуже високий</option>
+            <option value="1">Критичний</option>
+        </select>
+    </div>
+</div>
+<div class="variant">
+    <label class="label" for="cd15">Вимоги дотримання графіка розробки</label>
+    <div>
+        <select id="cd15">
+            <option value="1.23">Дуже низький</option>
+            <option value="1.08">Низький</option>
+            <option value="1">Середній</option>
+            <option value="1.04">Високий</option>
+            <option value="1.1">Дуже високий</option>
+            <option value="1">Критичний</option>
+        </select>
+    </div>
+</div>
+</p>
+</div>
+</body>
+</html>

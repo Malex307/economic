@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COCOMO II</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script>
+        function calculate() {
+            const size = document.getElementById('size').value;
+            const type = document.getElementById('type').value;
+            let pm = calcEAF(type) * getA(type) * Math.pow(size, calcE());
+            const pm_for_duration = calcEAF(type)/(document.getElementById('SCED').value) * getA(type) * Math.pow(size, calcE());
+            console.log(2.28+0.2*(calcE()-0.91));
+            let tm = document.getElementById('SCED').value * 3.67 * Math.pow(pm_for_duration, 0.28+0.2*(calcE()-0.91))
+            document.getElementById('pm').innerHTML = pm
+            document.getElementById('tm').innerHTML = tm
+        }
+
+        function calcEAF(type) {
+            const params = getParams(type);
+            let eaf = 1;
+            params.forEach(function (el) {
+                eaf *= document.getElementById(el).value;
+            })
+            return eaf;
+        }
+
+        function changeType() {
+            if (document.getElementById('type').value == 'pre') {
+                document.getElementById('post').style = 'display: none;'
+                document.getElementById('pre').style = ''
+            } else {
+                document.getElementById('post').style = ''
+                document.getElementById('pre').style = 'display: none;'
+            }
+        }
+
+        const sf_params = ['PREC', 'FLEX', 'RESL', 'TEAM', 'PMAT'];
+
+        function getParams(type) {
+            if (type === 'pre') {
+                return ['PERS', 'PREX', 'RCPX', 'RUSE', 'PDIF', 'FCIL', 'SCED'];
+            } else {
+                return ['ACAP', 'AEXP', 'PCAP', 'PCON', 'PEXP', 'LTEX', 'RELY', 'DATA', 'CPLX', 'RUSE', 'DOCU', 'TIME', 'STOR', 'PVOL', 'TOOL', 'SCED', 'SITE'];
+            }
+        }
+
+        function calcE() {
+            let sf = 0;
+            sf_params.forEach(function (el) {
+                sf += parseInt(document.getElementById(el).value);
+            })
+            return (0.91 + sf / 100);
+        }
+
+        function getA(type) {
+            if (type === 'pre') {
+                return 2.94
+            }
+            return 2.45
+        }
+    </script>
+    <style>
+        .variant {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        .label {
+            min-width: 300px;
+        }
+    </style>
+</head>
+<body>
+<div class="w3-sidebar w3-bar-block" style="width:25%">
+    <a href="lab1.html" class="w3-bar-item w3-button"><b>COCOMO I</b></a>
+    <a href="lab2.html" class="w3-bar-item w3-button"><b>COCOMO II</b></a>
+    <a href="lab3.html" class="w3-bar-item w3-button"><b>Functional points</b></a>
+</div>
+
+<div style="margin-left:25%">
+    <h1>COCOMO II</h1>
+<select name="type" id="type" onchange="changeType()">
+    <option value="pre">Early Design</option>
+    <option value="post">Post Architecture</option>
+</select>
+<label for="size">Size:</label>
+<input type="text" id="size">
+<div>
+    <div class="variant">
+        <label class="label" for="PREC">Precedentedness</label>
+        <select name="PREC" id="PREC">
+            <option value="6.2">Very Low</option>
+            <option value="4.96">Low</option>
+            <option value="3.72">Nominal</option>
+            <option value="2.48">High</option>
+            <option value="1.24">Very High</option>
+            <option value="0">Extra High</option>
+        </select>
+    </div>
+    <div class="variant">
+        <label class="label" for="FLEX">Development Flexibility</label>
+        <select name="FLEX" id="FLEX">
+            <option value="5.07">Very Low</option>
+            <option value="4.05">Low</option>
+            <option value="3.04">Nominal</option>
+            <option value="2.03">High</option>
+            <option value="1.01">Very High</option>
+            <option value="0">Extra High</option>
+        </select>
+    </div>
+    <div class="variant">
+        <label class="label" for="RESL">Architecture / Risk Resolution</label>
+        <select name="RESL" id="RESL">
+            <option value="7.07">Very Low</option>
+            <option value="5.65">Low</option>
+            <option value="4.24">Nominal</option>
+            <option value="2.83">High</option>
+            <option value="1.41">Very High</option>
+            <option value="0">Extra High</option>
+        </select>
+    </div>
+    <div class="variant">
+        <label class="label" for="TEAM">Team Cohesion</label>
+        <select name="TEAM" id="TEAM">
+            <option value="5.48">Very Low</option>
+            <option value="4.38">Low</option>
+            <option value="3.29">Nominal</option>
+            <option value="2.19">High</option>
+            <option value="1.10">Very High</option>
+            <option value="0">Extra High</option>
+        </select>
+    </div>
+    <div class="variant">
+        <label class="label" for="PMAT">Process Maturity</label>
+        <select name="PMAT" id="PMAT">
+            <option value="7.80">Very Low</option>
+            <option value="6.24">Low</option>
+            <option value="4.68">Nominal</option>
+            <option value="3.12">High</option>
+            <option value="1.56">Very High</option>
+            <option value="0">Extra High</option>
+        </select>
+    </div>
+</div>
+
+<div id="pre">
+    <p><h3>Early Design</h3></p>
+    <div>
+        <div class="variant">
+            <label class="label" for="PERS">Personnel Capability</label>
+            <select name="PERS" id="PERS">
+                <option value="2.12">Extra Low</option>
+                <option value="1.62">Very Low</option>
+                <option value="1.26">Low</option>
+                <option value="1.00">Nominal</option>
+                <option value="0.83">High</option>
+                <option value="0.63">Very High</option>
+                <option value="0.50">Extra High</option>
+            </select>
+        </div>
+        <div class="variant">
+            <label class="label" for="PREX">Personnel Experience</label>
+            <select name="PREX" id="PREX">
+                <option value="1.59">Extra Low</option>
+                <option value="1.33">Very Low</option>
+                <option value="1.22">Low</option>
+                <option value="1.00">Nominal</option>
+                <option value="0.87">High</option>
+                <option value="0.74">Very High</option>
+                <option value="0.62">Extra High</option>
+            </select>
+        </div>
+        <div class="variant">
+            <label class="label" for="RCPX">Product Reliability and Complexity</label>
+            <select name="RCPX" id="RCPX">
+                <option value="0.49">Extra Low</option>
+                <option value="0.60">Very Low</option>
+                <option value="0.83">Low</option>
+                <option value="1.00">Nominal</option>
+                <option value="1.33">High</option>
+                <option value="1.91">Very High</option>
+                <option value="2.72">Extra High</option>
+            </select>
+        </div>
+        <div class="variant">
+            <label class="label" for="RUSE">Developed for Reusability</label>
+            <select name="RUSE" id="RUSE">
+                <option disabled value="0">Extra Low</option>
+                <option disabled value="0">Very Low</option>
+                <option value="0.95">Low</option>
+                <option value="1">Nominal</option>
+                <option value="1.07">High</option>
+                <option value="1.15">Very High</option>
+                <option value="1.24">Extra High</option>
+            </select>
+        </div>
+        <div class="variant">
+            <label class="label" for="PDIF">Platform Difficulty</label>
+            <select name="PDIF" id="PDIF">
+                <option disabled value="">Extra Low</option>
+                <option disabled value="">Very Low</option>
+                <option value="0.87">Low</option>
+                <option value="1">Nominal</option>
+                <option value="1.29">High</option>
+                <option value="1.81">Very High</option>
+                <option value="2.61">Extra High</option>
+            </select>
+        </div>
+        <div class="variant">
+            <label class="label" for="FCIL">Facilities</label>
+            <select name="FCIL" id="FCIL">
+                <option value="1.43">Extra Low</option>
+                <option value="1.30">Very Low</option>
+                <option value="1.10">Low</option>
+                <option value="1.00">Nominal</option>
+                <option value="0.87">High</option>
+                <option value="0.73">Very High</option>
+                <option value="0.62">Extra High</option>
+            </select>
+        </div>
+        <div class="variant">
+            <label class="label" for="SCED">Required Development Schedule</label>
+            <select name="SCED" id="SCED">
+                <option disabled value="">Extra Low</option>
+                <option value="1.43">Very Low</option>
+                <option value="1.14">Low</option>
+                <option value="1.00">Nominal</option>
+                <option value=1"">High</option>
+                <option disabled value="">Very High</option>
+                <option disabled value="">Extra High</option>
+            </select>
+        </div>
+
+    </div>
+</div>
+<div id="post" style="display: none">
+    <p><h3>Post Architecture</h3></p>
+    <div class="variant">
+        <label class="label" for="ACAP">Analyst Capability</label>
+        <select name="ACAP" id="ACAP">
+            <option value="1.42">Very Low</option>
+            <option value="1.29">Low</option>
+            <option value="1.00">Nominal</option>
+            <option value="0.85">High</option>
+            <option value="0.71">Very High</option>
+            <option disabled value="">Extra High</option>
+        </select>
+    </div>
+    <div class="variant">
+        <label class="label" for="AEXP">Applications Experience</label>
+        <select name="AEXP" id="AEXP">
+            <option value="1.22">Very Low</option>
+            <option value="1.10">Low</option>
+            <option value="1">Nominal</option>
+            <option value="0.88">High</option>
+            <option value="0.81">Very High</option>
+            <option disabled value="">Extra High</option>
+        </select>
+    </div>
+    <div class="variant">
+        <label class="label" for="PCAP">Programmer Capability</label>
+        <select name="PCAP" id="PCAP">
+            <option value="1.34">Very Low</option>
+            <option value="1.15">Low</option>
+            <option value="1">Nominal</option>
+            <option value="0.88">High</option>
+            <option value="0.76">Very High</option>
+            <option disabled value="">Extra High</option>
+        </select>
+    </div>
+    <div class="variant">
+        <label class="label" for="PCON">Personnel Continuity</label>
+        <select name="PCON" id="PCON">
+            <option value="1.29">Very Low</option>
+            <option value="1.12">Low</option>
+            <option value="1">Nominal</option>
+            <option value="0.90">High</option>
+            <option value="0.81">Very High</option>
+            <option disabled value="">Extra High</option>
+        </select>
+    </div>
+    <div class="variant">
+        <label class="label" for="PEXP">Platform Experience</label>
+        <select name="PEXP" id="PEXP">
+            <option value="1.19">Very Low</option>
+            <option value="1.09">Low</option>
+            <option value="1.00">Nominal</option>
+            <option value="0.91">High</option>
+            <option value="0.85">Very High</option>
+            <option disabled value="">Extra High</option>
+        </select>
+    </div>
+    <div class="variant">
+        <label class="label" for="LTEX">Language and Tool Experience</label>
+        <select name="LTEX" id="LTEX">
+            <option value="1.20">Very Low</option>
+            <option value="1.09">Low</option>
+            <option value="1">Nominal</option>
+            <option value="0.91">High</option>
+            <option value="0.84">Very High</option>
+            <option disabled value="">Extra High</option>
+        </select>
+    </div>
+    <div class="variant">
+        <label class="label" for="RELY">Required Software Reliabilit</label>
+        <select name="RELY" id="RELY">
+            <option value="0.84">Very Low</option>
+            <option value="0.92">Low</option>
+            <option value="1">Nominal</option>
+            <option value="1.10">High</option>
+            <option value="1.26">Very High</option>
+            <option disabled value="">Extra High</option>
+        </select>
+    </div>
+    <div class="variant">
+        <label class="label" for="DATA">Database Size</label>
+        <select name="DATA" id="DATA">
+            <option disabled value="">Very Low</option>
+            <option value="0.23">Low</option>
+            <option value="1">Nominal</option>
+            <option value="1.14">High</option>
+            <option value="1.28">Very High</option>
+            <option disabled value="">Extra High</option>
+        </select>
+    </div>
+    <div class="variant">
+        <label class="label" for="CPLX">Software Product Complexity</label>
+        <select name="CPLX" id="CPLX">
+            <option value="0.73">Very Low</option>
+            <option value="0.87">Low</option>
+            <option value="1">Nominal</option>
+            <option value="1.17">High</option>
+            <option value="1.34">Very High</option>
+            <option value="1.74">Extra High</option>
+        </select>
+    </div>
+    <div class="variant">
+        <label class="label" for="RUSE">Required Reusability</label>
+        <select name="RUSE" id="RUSE">
+            <option disabled value="">Very Low</option>
+            <option value="0.95">Low</option>
+            <option value="1">Nominal</option>
+            <option value="1.07">High</option>
+            <option value="1.15">Very High</option>
+            <option value="1.24">Extra High</option>
+        </select>
+    </div>
+    <div class="variant">
+        <label class="label" for="DOCU">Documentation Match to Life</label>
+        <select name="DOCU" id="DOCU">
+            <option value="0.81">Very Low</option>
+            <option value="0.91">Low</option>
+            <option value="1">Nominal</option>
+            <option value="1.11">High</option>
+            <option value="1.23">Very High</option>
+            <option disabled value="">Extra High</option>
+        </select>
+    </div>
+    <div class="variant">
+        <label class="label" for="TIME">Execution Time Constraint</label>
+        <select name="TIME" id="TIME">
+            <option disabled value="">Very Low</option>
+            <option disabled value="">Low</option>
+            <option value="1">Nominal</option>
+            <option value="1.11">High</option>
+            <option value="1.29">Very High</option>
+            <option value="1.63">Extra High</option>
+        </select>
+    </div>
+    <div class="variant">
+        <label class="label" for="STOR">Main Storage Constraint</label>
+        <select name="STOR" id="STOR">
+            <option disabled value="">Very Low</option>
+            <option disabled value="">Low</option>
+            <option value="1">Nominal</option>
+            <option value="1.05">High</option>
+            <option value="1.17">Very High</option>
+            <option value="1.46">Extra High</option>
+        </select>
+    </div>
+    <div class="variant">
+        <label class="label" for="PVOL">Platform Volatility</label>
+        <select name="PVOL" id="PVOL">
+            <option disabled value="">Very Low</option>
+            <option value="0.87">Low</option>
+            <option value="1">Nominal</option>
+            <option value="1.15">High</option>
+            <option value="1.30">Very High</option>
+            <option disabled value="">Extra High</option>
+        </select>
+    </div>
+    <div class="variant">
+        <label class="label" for="TOOL">Use of Software Tools</label>
+        <select name="TOOL" id="TOOL">
+            <option value="1.17">Very Low</option>
+            <option value="1.09">Low</option>
+            <option value="1">Nominal</option>
+            <option value="0.90">High</option>
+            <option value="0.78">Very High</option>
+            <option disabled value="">Extra High</option>
+        </select>
+    </div>
+    <div class="variant">
+        <label class="label" for="SCED">Required Development Schedule</label>
+        <select name="SCED" id="SCED">
+            <option value="1.43">Very Low</option>
+            <option value="1.14">Low</option>
+            <option value="1">Nominal</option>
+            <option value="1">High</option>
+            <option value="">Very High</option>
+            <option disabled value="">Extra High</option>
+        </select>
+    </div>
+    <div class="variant">
+        <label class="label" for="SITE">Multisite Development</label>
+        <select name="SITE" id="SITE">
+            <option value="1.22">Very Low</option>
+            <option value="1.09">Low</option>
+            <option value="1">Nominal</option>
+            <option value="0.93">High</option>
+            <option value="0.86">Very High</option>
+            <option value="0.80">Extra High</option>
+        </select>
+    </div>
+</div>
+<button onclick="calculate()">Calculate</button>
+<p>Employability: <span id="pm"></span></p>
+<p>Duration of the project: <span id="tm"></span></p>
+</div>
+</body>
+</html>

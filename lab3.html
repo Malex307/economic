@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Functionals points</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script>
+        function calculate(){
+            const caf = calculateCAF();
+            const afp = calculateAFP(caf);
+            const loc = calculateLOC(afp);
+            document.getElementById('caf').innerHTML = caf;
+            document.getElementById('afp').innerHTML = afp;
+            document.getElementById('loc').innerHTML = loc;
+        }
+
+        function calculateCAF(){
+            let caf = 0;
+            for (let i = 1; i < 15; i++) {
+                caf += parseInt(document.getElementById("env" + i).value);
+            }
+            return caf;
+        }
+
+        function calculateAFP(caf){
+            let afp = 0;
+            for (let i = 1; i < 5; i++) {
+                count = document.getElementById("level" + i).value;
+                coef = document.getElementById("level" + i + "_value").value;
+                afp += count * coef;
+            }
+            return afp * caf;
+        }
+
+        function calculateLOC(afp){
+            pl_coef = document.getElementById("pl").value;
+            return afp * pl_coef;
+        }
+    </script>
+</head>
+
+<body>
+
+<div class="w3-sidebar w3-bar-block" style="width:25%">
+    <a href="lab1.html" class="w3-bar-item w3-button"><b>COCOMO I</b></a>
+    <a href="lab2.html" class="w3-bar-item w3-button"><b>COCOMO II</b></a>
+    <a href="lab3.html" class="w3-bar-item w3-button"><b>Functional points</b></a>
+</div>
+
+<div style="margin-left:25%">
+    <h1>Functional points</h1>
+    <p>
+    <h2>Difficulty levels</h2>
+    </p>
+    <p style="display: flex;">
+        <label style="min-width:300px" for="level1">Internal Logical File</label>
+        <input  id="level1" type="number">
+        <select name="" id="level1_value">
+            <option value="7">Low</option>
+            <option value="10">Average</option>
+            <option value="15">High</option>
+        </select>
+    </p>
+    <p style="display: flex;">
+        <label style="min-width:300px" for="level2">External Interface File</label>
+        <input id="level2" type="number">
+        <select name="" id="level2_value">
+            <option value="5">Low</option>
+            <option value="7">Average</option>
+            <option value="10">High</option>
+        </select>
+    </p>
+    <p style="display: flex;">
+        <label style="min-width:300px" for="level3">External Input</label>
+        <input id="level3" type="number">
+        <select name="" id="level3_value">
+            <option value="3">Low</option>
+            <option value="4">Average</option>
+            <option value="6">High</option>
+        </select>
+    </p>
+    <p style="display: flex;">
+        <label style="min-width:300px" for="level4">External Output</label>
+        <input id="level4" type="number">
+        <select name="" id="level4_value">
+            <option value="4">Low</option>
+            <option value="5">Average</option>
+            <option value="7">High</option>
+        </select>
+    </p>
+    <p style="display: flex;">
+        <label style="min-width:300px" for="level5">External Inquiry</label>
+        <input id="level5" type="number">
+        <select name="" id="level5_value">
+            <option value="3">Low</option>
+            <option value="4">Average</option>
+            <option value="6">High</option>
+        </select>
+    </p>
+    <p>
+    <h2>Programming language</h2>
+    <select name="" id="pl">
+        <option value="128">Batch files DOS</option>
+        <option value="107">Basic</option>
+        <option value="80">PL/1</option>
+        <option value="58">C#</option>
+        <option value="56">Expanded LISP</option>
+        <option value="55">Java</option>
+        <option value="54">JavaScript</option>
+        <option value="53">C++</option>
+        <option value="50">Visual Basic</option>
+        <option value="40">Database languages</option>
+        <option value="38">Access</option>
+        <option value="38">VBScript</option>
+        <option value="35">Adoption support languages</option>
+        <option value="34">FoxPro 2.5</option>
+        <option value="29">DELPHI</option>
+        <option value="29">Standard object-oriented</option>
+        <option value="28">VB.Net</option>
+        <option value="20">Standad languages of the 4th generation</option>
+        <option value="15">HTML 3.0</option>
+        <option value="13">SQL</option>
+        <option value="11">SQL Forms</option>
+        <option value="6">Excel</option>
+    </select>
+    </p>
+    <p>
+    <h2>Environmental Factors</h2>
+    </p>
+    <div style="display: flex;">
+        <div>
+            <div style="width: 400px;text-align: center;display: flex;">
+                <div style="min-width: 250px;">
+                    <label for="env1">Data Communications</label>
+                </div>
+                <div style="display: inline-flex;">
+                    <select name="" id="env1">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+            </div>
+            <div style="width: 400px;text-align: center;display: flex;">
+                <div style="min-width: 250px;">
+                    <label for="env2">Performance</label>
+                </div>
+                <div style="display: inline-flex;">
+                    <select name="" id="env2">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+            </div>
+            <div style="width: 400px;text-align: center;display: flex;">
+                <div style="min-width: 250px;">
+                    <label for="env3">Transaction Rate</label>
+                </div>
+                <div style="display: inline-flex;">
+                    <select name="" id="env3">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+            </div>
+            <div style="width: 400px;text-align: center;display: flex;">
+                <div style="min-width: 250px;">
+                    <label for="env4">End User Efficiency</label>
+                </div>
+                <div style="display: inline-flex;">
+                    <select name="" id="env4">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+            </div>
+            <div style="width: 400px;text-align: center;display: flex;">
+                <div style="min-width: 250px;">
+                    <label for="env5">Online Update</label>
+                </div>
+                <div style="display: inline-flex;">
+                    <select name="" id="env5">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+            </div>
+            <div style="width: 400px;text-align: center;display: flex;">
+                <div style="min-width: 250px;">
+                    <label for="env6">Installation Ease</label>
+                </div>
+                <div style="display: inline-flex;">
+                    <select name="" id="env6">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+            </div>
+            <div style="width: 400px;text-align: center;display: flex;">
+                <div style="min-width: 250px;">
+                    <label for="env7">Multiple Sites</label>
+                </div>
+                <div style="display: inline-flex;">
+                    <select name="" id="env7">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div style="width: 400px;text-align: center;display: flex;">
+                <div style="min-width: 250px;">
+                    <label for="env8">Distributed Functions</label>
+                </div>
+                <div style="display: inline-flex;">
+                    <select name="" id="env8">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+            </div>
+            <div style="width: 400px;text-align: center;display: flex;">
+                <div style="min-width: 250px;">
+                    <label for="env9">Heavily Used Configuration</label>
+                </div>
+                <div style="display: inline-flex;">
+                    <select name="" id="env9">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+            </div>
+            <div style="width: 400px;text-align: center;display: flex;">
+                <div style="min-width: 250px;">
+                    <label for="env10">Online Data Entry</label>
+                </div>
+                <div style="display: inline-flex;">
+                    <select name="" id="env10">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+            </div>
+            <div style="width: 400px;text-align: center;display: flex;">
+                <div style="min-width: 250px;">
+                    <label for="env11">Complex Processing</label>
+                </div>
+                <div style="display: inline-flex;">
+                    <select name="" id="env11">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+            </div>
+            <div style="width: 400px;text-align: center;display: flex;">
+                <div style="min-width: 250px;">
+                    <label for="env12">Reusability</label>
+                </div>
+                <div style="display: inline-flex;">
+                    <select name="" id="env12">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+            </div>
+            <div style="width: 400px;text-align: center;display: flex;">
+                <div style="min-width: 250px;">
+                    <label for="env13">Operational Ease</label>
+                </div>
+                <div style="display: inline-flex;">
+                    <select name="" id="env13">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+            </div>
+            <div style="width: 400px;text-align: center;display: flex;">
+                <div style="min-width: 250px;">
+                    <label for="env14">Facilitate Change</label>
+                </div>
+                <div style="display: inline-flex;">
+                    <select name="" id="env14">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button onclick="calculate()" style="width:100px">calculate</button>
+    <p>
+        Adjusting complexity factor: <span id="caf"></span>
+    </p>
+    <p>
+        Adjusted functional points: <span id="afp"></span>
+    </p>
+    <p>
+        LOC string conversion: <span id="loc"></span>
+    </p>
+</div>
+</body>
+
+</html>
